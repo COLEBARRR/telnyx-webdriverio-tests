@@ -6,12 +6,9 @@ The project includes 20 automated tests covering homepage content, navigation, p
 
 ## Quick Links
 
-- **GitHub Repository:** [View Repository](https://github.com/COLEBARRR/10_cypress_autotests)
-- **CI/CD Pipeline:** [View GitHub Actions Runs](https://github.com/COLEBARRR/10_cypress_autotests/actions)
-- **Test Reports:** [View Test Reports](https://cloud.cypress.io/projects/1n3gw6/runs)
-- **Test Cases:** [View Google Docs test cases](https://docs.google.com/spreadsheets/d/1JRK-pL_pn71jGFu6urKOmFrr4flrFr2he1ZARNJyjno/edit?usp=sharing)
-
-Replace these URLs after the new GitHub repository, GitHub Actions pipeline, GitHub Pages report, and test documentation are published.
+- **GitHub Repository:** [View Repository](https://github.com/COLEBARRR/telnyx-webdriverio-tests)
+- **CI/CD Pipeline:** [View GitHub Actions Runs](https://github.com/COLEBARRR/telnyx-webdriverio-tests/actions)
+- **Test Reports:** [View Test Reports](https://colebarrr.github.io/telnyx-webdriverio-tests/)
 
 ## Prerequisites
 
