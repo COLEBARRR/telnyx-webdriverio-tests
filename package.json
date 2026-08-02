@@ -11,6 +11,7 @@
     "test:chrome": "cross-env HEADLESS=true TEST_ENV=production wdio run ./config/wdio.chrome.conf.js",
     "test:firefox": "cross-env HEADLESS=true TEST_ENV=production wdio run ./config/wdio.firefox.conf.js",
     "test:edge": "cross-env HEADLESS=true TEST_ENV=production wdio run ./config/wdio.edge.conf.js",
+    "test:one": "node ./scripts/run-one-test.js",
     "test:all:browsers": "npm run test:chrome && npm run test:firefox && npm run test:edge",
     "test:staging": "cross-env HEADLESS=true TEST_ENV=staging wdio run ./config/wdio.chrome.conf.js",
     "test:staging:firefox": "cross-env HEADLESS=true TEST_ENV=staging wdio run ./config/wdio.firefox.conf.js",

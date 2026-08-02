@@ -72,6 +72,20 @@ npm run test:headed
 npm run test:file -- --spec ./test/specs/telnyx.e2e.js
 ```
 
+### Run one test by its title
+
+Choose the browser, headed or headless mode, and any unique part of the test title:
+
+```bash
+npm run test:one -- --browser firefox --mode headed --test "TC-12"
+```
+
+Supported browser values are `chrome`, `firefox`, and `edge`. Supported mode values are `headed` and `headless`. Chrome and headless mode are used by default, so the shortest form is:
+
+```bash
+npm run test:one -- --test "TC-12"
+```
+
 ### Browser-specific runs
 
 ```bash
