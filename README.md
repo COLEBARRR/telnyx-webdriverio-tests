@@ -38,8 +38,8 @@ WebdriverIO automatically obtains compatible browser drivers when a run starts.
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/COLEBARRR/10_cypress_autotests.git
-cd 10_cypress_autotests
+git clone https://github.com/COLEBARRR/telnyx-webdriverio-tests.git
+cd telnyx-webdriverio-tests
 npm install
 ```
 
