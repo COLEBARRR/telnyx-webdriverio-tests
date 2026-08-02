@@ -1,0 +1,43 @@
+name: telnyx-webdriverio
+
+services:
+  selenium:
+    image: selenium/standalone-chrome:4.44.0-20260505
+    shm_size: 2gb
+    environment:
+      SE_START_VNC: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:4444/wd/hub/status | grep -q '\"ready\": true'"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    depends_on:
+      selenium:
+        condition: service_healthy
+    environment:
+      SELENIUM_HOST: selenium
+      SELENIUM_PORT: "4444"
+      TEST_ENV: ${TEST_ENV:-production}
+      HEADLESS: "true"
+    volumes:
+      - ./allure-results:/app/allure-results
+      - ./allure-report:/app/allure-report
+    command:
+      - sh
+      - -c
+      - |
+        npm run test:docker
+        test_status=$$?
+        npm run allure:generate
+        report_status=$$?
+        if [ "$$test_status" -ne 0 ]; then
+          exit "$$test_status"
+        fi
+        exit "$$report_status"
