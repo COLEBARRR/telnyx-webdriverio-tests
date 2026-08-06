@@ -6,6 +6,8 @@ services:
     shm_size: 2gb
     environment:
       SE_START_VNC: "false"
+      SE_NODE_MAX_SESSIONS: "2"
+      SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://localhost:4444/wd/hub/status | grep -q '\"ready\": true'"]
       interval: 5s
@@ -26,6 +28,7 @@ services:
       SELENIUM_PORT: "4444"
       TEST_ENV: ${TEST_ENV:-production}
       HEADLESS: "true"
+      MAX_INSTANCES: "2"
     volumes:
       - ./allure-results:/app/allure-results
       - ./allure-report:/app/allure-report

@@ -1,14 +1,25 @@
 const BasePage = require('./base.page');
 
 class SignUpPage extends BasePage {
-  get heading() { return $('h1=Create your account'); }
-  get emailInput() { return $('#sign-up-email'); }
-  get firstNameInput() { return $('#sign-up-first-name'); }
-  get lastNameInput() { return $('#sign-up-last-name'); }
-  get passwordInput() { return $('#sign-up-password'); }
-  get termsCheckbox() { return $('#sign-up-terms'); }
-  get submitButton() { return $('form[aria-label="signup-form"] button[type="submit"]'); }
-  get passwordError() { return $('//*[contains(normalize-space(), "Password must")]'); }
+  #selectors = Object.freeze({
+    heading: 'main h1',
+    emailInput: '#sign-up-email',
+    firstNameInput: '#sign-up-first-name',
+    lastNameInput: '#sign-up-last-name',
+    passwordInput: '#sign-up-password',
+    passwordError: '#sign-up-password_message',
+    termsCheckbox: '#sign-up-terms',
+    submitButton: 'form[aria-label="signup-form"] button[type="submit"]',
+  });
+
+  get heading() { return $(this.#selectors.heading); }
+  get emailInput() { return $(this.#selectors.emailInput); }
+  get firstNameInput() { return $(this.#selectors.firstNameInput); }
+  get lastNameInput() { return $(this.#selectors.lastNameInput); }
+  get passwordInput() { return $(this.#selectors.passwordInput); }
+  get passwordError() { return $(this.#selectors.passwordError); }
+  get termsCheckbox() { return $(this.#selectors.termsCheckbox); }
+  get submitButton() { return $(this.#selectors.submitButton); }
 
   async open() {
     await super.open('/sign-up');

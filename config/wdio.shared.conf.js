@@ -10,7 +10,7 @@ const sharedConfig = {
   runner: 'local',
   specs: ['../test/specs/**/*.e2e.js'],
   exclude: [],
-  maxInstances: 1,
+  maxInstances: Number(process.env.MAX_INSTANCES || 3),
   logLevel: 'error',
   bail: 0,
   baseUrl: environment.baseUrl,

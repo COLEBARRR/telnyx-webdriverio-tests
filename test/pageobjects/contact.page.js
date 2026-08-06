@@ -1,9 +1,17 @@
 const BasePage = require('./base.page');
 
 class ContactPage extends BasePage {
-  get heading() { return $('h1=Talk to an expert'); }
-  get form() { return $('#mktoForm_1987'); }
-  get submitButton() { return $('#mktoForm_1987 button[type="submit"]'); }
+  #selectors = Object.freeze({
+    heading: 'main h1',
+    form: '#mktoForm_1987',
+    submitButton: '#mktoForm_1987 button[type="submit"]',
+    validationErrors: '#mktoForm_1987 .mktoError',
+  });
+
+  get heading() { return $(this.#selectors.heading); }
+  get form() { return $(this.#selectors.form); }
+  get submitButton() { return $(this.#selectors.submitButton); }
+  get validationErrors() { return $$(this.#selectors.validationErrors); }
 
   async open() {
     await super.open('/contact-us');
@@ -12,7 +20,7 @@ class ContactPage extends BasePage {
 
   async submitEmptyForm() {
     await this.submitButton.click();
-    await browser.waitUntil(async () => (await $$('.mktoError')).length > 0, {
+    await browser.waitUntil(async () => (await this.validationErrors).length > 0, {
       timeout: 10000,
       timeoutMsg: 'Expected validation errors after submitting the empty form',
     });

@@ -1,4 +1,5 @@
 const { spawnSync } = require('node:child_process');
+const fs = require('node:fs');
 const path = require('node:path');
 
 function readOption(argumentsList, optionName) {
@@ -38,12 +39,25 @@ if (!testName) {
 const projectRoot = path.resolve(__dirname, '..');
 const configPath = path.join(projectRoot, 'config', `wdio.${browserName}.conf.js`);
 const wdioCliPath = path.join(projectRoot, 'node_modules', '@wdio', 'cli', 'bin', 'wdio.js');
+const specsDirectory = path.join(projectRoot, 'test', 'specs');
+const matchingSpecs = fs.readdirSync(specsDirectory)
+  .filter((fileName) => fileName.endsWith('.e2e.js'))
+  .filter((fileName) => fs.readFileSync(path.join(specsDirectory, fileName), 'utf8')
+    .toLowerCase()
+    .includes(testName.toLowerCase()));
+
+const wdioArguments = [wdioCliPath, 'run', configPath];
+if (matchingSpecs.length === 1) {
+  wdioArguments.push('--spec', path.join(specsDirectory, matchingSpecs[0]));
+}
+wdioArguments.push('--mochaOpts.grep', testName);
 
 console.log(`Running test matching "${testName}" in ${browserName} (${modeName})...`);
+if (matchingSpecs.length === 1) console.log(`Selected spec: ${matchingSpecs[0]}`);
 
 const result = spawnSync(
   process.execPath,
-  [wdioCliPath, 'run', configPath, '--mochaOpts.grep', testName],
+  wdioArguments,
   {
     cwd: projectRoot,
     stdio: 'inherit',

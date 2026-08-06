@@ -69,7 +69,7 @@ npm run test:headed
 ### Run a single spec file
 
 ```bash
-npm run test:file -- --spec ./test/specs/telnyx.e2e.js
+npm run test:file -- --spec ./test/specs/navigation.e2e.js
 ```
 
 ### Run one test by its title
@@ -232,7 +232,12 @@ config/
 test/
   data/                    Test data
   pageobjects/             Page Object classes and selectors
-  specs/                   WebdriverIO test specs
+  specs/
+    company.e2e.js         Careers, Network, Coverage, and Privacy
+    features.e2e.js        Chat and cookie behavior
+    forms.e2e.js           Sign Up and Contact Us validation
+    navigation.e2e.js      Homepage, navigation, header, and footer
+    pricing.e2e.js         Pricing and SIP Trunking
 package.json               npm commands and dependencies
 Dockerfile                 WebdriverIO test-runner image
 compose.yaml               Test runner and Selenium Chrome services
@@ -241,9 +246,11 @@ compose.yaml               Test runner and Selenium Chrome services
 
 ## Architecture
 
-Page-specific selectors and actions are kept in `test/pageobjects/`. The spec file contains readable test behavior and assertions without duplicating page implementation details.
+Page-specific selectors and actions are kept in `test/pageobjects/`. Private selector maps keep locator declarations together, while public getters expose WebdriverIO elements consistently. The spec files contain readable test behavior and assertions without duplicating page implementation details.
 
-The shared WebdriverIO configuration contains the base URL selection, timeouts, Mocha settings, the spec reporter, Allure integration, and failure screenshots. Each local browser configuration extends these shared settings with its own capabilities and command-line arguments. The Docker configuration extends the same settings but sends commands to the remote Selenium service at `selenium:4444`.
+The 20 tests are split across five logical spec files. WebdriverIO can therefore distribute them across multiple browser workers instead of forcing the complete suite through one sequential spec. Local runs allow up to three workers; Docker uses two Selenium sessions for a more conservative CI resource profile.
+
+The shared WebdriverIO configuration contains the base URL selection, parallel worker limit, timeouts, Mocha settings, the spec reporter, Allure integration, and failure screenshots. Each local browser configuration extends these shared settings with its own capabilities and command-line arguments. The Docker configuration extends the same settings but sends commands to the remote Selenium service at `selenium:4444`.
 
 ## Test Coverage
 
